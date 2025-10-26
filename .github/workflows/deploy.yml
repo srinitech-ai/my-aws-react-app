@@ -37,7 +37,6 @@ jobs:
 
       # Only deploy on push (not on PR)
       - name: Configure AWS credentials
-        if: github.event_name == 'push'
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -47,10 +46,4 @@ jobs:
       - name: Deploy to S3
         if: github.event_name == 'push'
         run: |
-          BUCKET="my-react-app-srini-static-site"
-          aws s3 sync dist/ s3://$BUCKET/ --delete
-
-      - name: Invalidate CloudFront
-        if: github.event_name == 'push' && secrets.CLOUDFRONT_DIST_ID != ''
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DIST_ID }} --paths "/*"
+          aws s3 sync dist/ s3://my-react-app-srini-static-site/ --delete
