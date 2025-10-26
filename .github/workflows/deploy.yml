@@ -31,4 +31,4 @@ jobs:
 
       - name: Sync to S3
         run: |
-          aws s3 sync dist/ s3://my-react-app-srini-static-site/ --delete --acl public-read
+          aws s3 sync dist/ s3://my-react-app-srini-static-site/ --delete
